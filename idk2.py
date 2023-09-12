@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import *
 
-# Function to be executed when Button 1 is clicked
+# mouse to be executed when Button 1 is clicked
 def button1_click():
     import cv2
     import numpy as np
@@ -50,7 +50,7 @@ def button1_click():
             if fingers[1] == 1 and fingers[2] == 1:     # If fore finger & middle finger both are up
                 length, img, lineInfo = detector.findDistance(8, 12, img)
 
-                if length < 40:     # If both fingers are really close to each other
+                if length < 60:     # If both fingers are really close to each other
                     cv2.circle(img, (lineInfo[4], lineInfo[5]), 15, (0, 255, 0), cv2.FILLED)
                     autopy.mouse.click()    # Perform Click
 
@@ -66,13 +66,95 @@ def button1_click():
     cap.release()
     cv2.destroyAllWindows()
 
-# Function to be executed when Button 2 is clicked
+# keyboard to be executed when Button 2 is clicked
 def button2_click():
-    print("hello")
+    import cv2
+    from cvzone.HandTrackingModule import HandDetector
+    import time
+
+    cap = cv2.VideoCapture(0)
+    cap.set(3, 1280)  # Width property is set at value 3
+    cap.set(4, 720)   # Height property is set at value 4
+
+    detector = HandDetector(detectionCon=1)  # By default, it is 0.5
+
+    keys = [["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+            ["A", "S", "D", "F", "G", "H", "J", "K", "L", ";"],
+            ["Z", "X", "C", "V", "B", "N", "M", ",", ".", "/"]]
+
+    finalText = ""
+    backspaceClicked = False  # Flag to track if Backspace button was clicked
+
+    def draw(img, btnList):
+        for button in btnList:
+            x, y = button.pos
+            w, h = button.size
+            cv2.rectangle(img, button.pos, (x + w, y + h), (255, 0, 255), cv2.FILLED)
+            cv2.putText(img, button.text, (x + 20, y + 65), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 4)
+        return img
+
+    class Button():
+        def __init__(self, pos, text, size=[85, 85]):
+            self.pos = pos
+            self.size = size
+            self.text = text
+
+    # Define btnList before the loop
+    btnList = []
+    for i in range(len(keys)):
+        for j, key in enumerate(keys[i]):
+            btnList.append(Button([100 * j + 50, 100 * i + 50], key))
+
+    # Add a Backspace button
+    btnList.append(Button([950, 250], "<", [150, 85]))
+
+    while True:
+        success, img = cap.read()
+        img = cv2.flip(img, 1)
+
+        img = detector.findHands(img)
+        lmList, bboxInfo = detector.findPosition(img)
+        img = draw(img, btnList)
+
+        if lmList:
+            for button in btnList:
+                x, y = button.pos
+                w, h = button.size
+
+                if x < lmList[8][0] < x + w and y < lmList[8][1] < y + h:
+                    cv2.rectangle(img, button.pos, (x + w, y + h), (175, 0, 175), cv2.FILLED)
+                    cv2.putText(img, button.text, (x + 20, y + 65), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 4)
+
+                    if button.text == "<":
+                        l, _, _ = detector.findDistance(8, 12, img, draw=False)
+                        if l < 30 and backspaceClicked==False:
+                            cv2.rectangle(img, button.pos, (x + w, y + h), (0, 255, 0), cv2.FILLED)
+                            cv2.putText(img, button.text, (x + 20, y + 65), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 4)
+                            finalText = finalText[:-1]  # Remove the last character
+                            backspaceClicked = False # Set the Backspace flag
+                            time.sleep(0.15)
+                    else:
+                        l, _, _ = detector.findDistance(8, 12, img, draw=False)
+                        if l < 30:
+                            cv2.rectangle(img, button.pos, (x + w, y + h), (0, 255, 0), cv2.FILLED)
+                            cv2.putText(img, button.text, (x + 20, y + 65), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 4)
+                            finalText += button.text
+                              # Reset the Backspace flag
+                            time.sleep(0.15)
+
+        cv2.rectangle(img, (50, 350), (700, 450), (175, 0, 175), cv2.FILLED)
+        cv2.putText(img, finalText, (60, 430), cv2.FONT_HERSHEY_PLAIN, 5, (255, 255, 255), 5)
+
+        if cv2.waitKey(1) == ord("e"):
+            break
+
+        cv2.imshow("Image", img)
+        cv2.waitKey(1)
+
+        
 
 
-
-# Function to be executed when Button 3 is clicked
+# volume control to be executed when Button 3 is clicked
 def button3_click():
     import cv2
     import time
@@ -126,7 +208,7 @@ def button3_click():
             vol = np.interp(length, [50, 300], [minVol, maxVol])
             volBar = np.interp(length, [50, 300], [400, 150])
             volPer = np.interp(length, [50, 300], [0, 100])
-            print(int(length), vol)
+            #print(int(length), vol)
             volume.SetMasterVolumeLevel(vol, None)
 
             # Interpolate color from green to red based on volPer
@@ -162,28 +244,30 @@ def button3_click():
 # Create the main window
 root = tk.Tk()
 root.title("Virtual Computer System")
-root.geometry("640x550")  # Set window dimensions
+root.geometry("1920x1080")  # Set window dimensions
+
+
 
 # Customize the main window background color
-root.configure(bg="cyan")
+root.configure(bg="#23272f")
 
 # Create a custom font
-custom_font = ("comic_sans", 16, "italic")
+custom_font = ("cambria", 16, "bold")
 
 
 image = tk.PhotoImage(file="megalogowithstroke.png")
-image_label = tk.Label(root, image=image, bg="cyan")
+image_label = tk.Label(root, image=image, bg="#23272f")
 image_label.pack()
 
-button1_style = tk.Button(root, text="Virtual mouse ", command=button1_click, font=custom_font, bg="blue", fg="white")
+button1_style = tk.Button(root, text="Virtual mouse ", command=button1_click, relief="flat", font=custom_font, bg="#087ea4", fg="white")
 button1_style.pack(pady=20)  # Add vertical padding to center the button
 
 # Create Button 2 with different colors and font and center it
-button2_style = tk.Button(root, text="Virtual Keyboard", command=button2_click, font=custom_font, bg="blue", fg="white")
+button2_style = tk.Button(root, text="Virtual Keyboard", command=button2_click, relief="flat", font=custom_font, bg="#087ea4", fg="white")
 button2_style.pack(pady=20)
 
 # Create Button 3 with another set of colors and font and center it
-button3_style = tk.Button(root, text="Virtual volume control", command=button3_click, font=custom_font, bg="blue", fg="white")
+button3_style = tk.Button(root, text="Virtual volume control", command=button3_click, relief="flat", font=custom_font, bg="#087ea4", fg="white")
 button3_style.pack(pady=20)
 
 
