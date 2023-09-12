@@ -72,10 +72,8 @@ while True:
 
     cv2.rectangle(img, (50,350), (700,450), (175,0,175), cv2.FILLED)
     cv2.putText(img, finalText , (60,430), cv2.FONT_HERSHEY_PLAIN, 5, (255,255,255), 5)
-    if cv2.waitKey(1) == ord("  q"):  # Press 'e' key to exit the loop
+    if cv2.waitKey(1) == ord("e"):  # Press 'e' key to exit the loop
         break
 
     cv2.imshow("Image",img)
     cv2.waitKey(1)
-cap.release()
-cv2.destroyAllWindows()
