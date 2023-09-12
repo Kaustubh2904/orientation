@@ -1,6 +1,6 @@
 import tkinter as tk
-import cv2
 
+# Function to be executed when Button 1 is clicked
 def button1_click():
     import cv2
     import numpy as np
@@ -64,14 +64,14 @@ def button1_click():
 
     cap.release()
     cv2.destroyAllWindows()
-  
 
+# Function to be executed when Button 2 is clicked
 def button2_click():
-    print("button click")
+    print("hello")
 
 
 
-
+# Function to be executed when Button 3 is clicked
 def button3_click():
     import cv2
     import time
@@ -117,7 +117,7 @@ def button3_click():
 
             cv2.circle(img, (x1, y1), 15, (255, 0, 0), cv2.FILLED)
             cv2.circle(img, (x2, y2), 15, (255, 0, 0), cv2.FILLED)
-            cv2.line(img, (x1, y1), (x2, y2), (0, 100, 100), 3)
+            cv2.line(img, (x1, y1), (x2, y2), (0, 255, 255), 3)
             cv2.circle(img, (cx, cy), 15, (0, 0, 255), cv2.FILLED)
 
             length = math.hypot(x2 - x1, y2 - y1)
@@ -141,7 +141,7 @@ def button3_click():
         fps = 1 / (cTime - pTime)
         pTime = cTime
 
-        cv2.putText(img, f'FPS: {int(fps)}', (40, 50), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 100, 100), 3)
+        cv2.putText(img, f'FPS: {int(fps)}', (40, 50), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 0, 0), 3)
 
         cv2.imshow("IMG", img)
         key = cv2.waitKey(1)
@@ -151,56 +151,35 @@ def button3_click():
 
     cap.release()
     cv2.destroyAllWindows()
-     
-def start_gui():#create main window
-    root = tk.Tk()
-    root.title("Virtual Computer System")
-    root.geometry("640x480")
-
-
-    # canvas = tk.Canvas(root, width=400, height=300)
-    #canvas.pack()
-
-    # color1 = "#ff9999"  # Light red
-    # color2 = "#99cc99"  # Light green
-    # start_x, start_y = 0, 0
-    # end_x, end_y = 0, 300
-    
-    # for i in range(300):
-    # # Calculate the gradient color at this position
-    #     gradient_color = "#%02x%02x%02x" % (
-    #     int(255 - (i / 300 * (255 - int(color1[1:3], 16)))),
-    #     int(255 - (i / 300 * (255 - int(color1[3:5], 16)))),
-    #     int(255 - (i / 300 * (255 - int(color1[5:7], 16))))
-    #)
-
-    # # Draw a horizontal line with the gradient color
-    # canvas.create_line(start_x, start_y + i, end_x, end_y + i, fill=gradient_color, width=1)
 
 
 
-    #background color
-    root.configure(bg="lightblue")
-
-    #create custom font
-    custom_font = ("cambria", 16, "italic")
 
 
-    #crate button 1 with a custom style 
-    
-    button1_style = tk.Button(root, text="Virtual Mouse", command=button1_click, font=custom_font, bg="blue", fg="white")
-    button1_style.pack(pady=20)
 
 
-    #create button 2 with different colors and font 
-    button2_style = tk.Button(root, text="Keyboard", command=button2_click, font=custom_font, bg="blue", fg="white") 
-    button2_style.pack(pady=20)
+# Create the main window
+root = tk.Tk()
+root.title("Virtual Computer System")
+root.geometry("640x480")  # Set window dimensions
 
-    button3_style = tk.Button(root, text="virtual volume control", command=button2_click, font=custom_font, bg="blue", fg="white") 
-    button3_style.pack(pady=20)
+# Customize the main window background color
+root.configure(bg="lightgray")
 
+# Create a custom font
+custom_font = ("comic_sans", 12, "bold")
 
-    root.mainloop()
+# Create Button 1 with a custom style
+button1_style = tk.Button(root, text="Virtual mouse ", command=button1_click, font=custom_font, bg="blue", fg="white")
+button1_style.pack(pady=20)  # Add some padding
 
-# Create the GUI first
-start_gui()
+# Create Button 2 with different colors and font
+button2_style = tk.Button(root, text="Virtual Keyboard", command=button2_click, font=("Verdana", 10), bg="orange", fg="black")
+button2_style.pack(pady=20)
+
+# Create Button 3 with another set of colors and font
+button3_style = tk.Button(root, text="volume control", command=button3_click, font=("Helvetica", 14), bg="red", fg="white")
+button3_style.pack(pady=20)
+
+# Start the GUI main loop
+root.mainloop()
