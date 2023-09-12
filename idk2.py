@@ -80,7 +80,7 @@ def button2_click():
 
     keys = [["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
             ["A", "S", "D", "F", "G", "H", "J", "K", "L", ";"],
-            ["Z", "X", "C", "V", "B", "N", "M", ",", ".", "/"]]
+            ["Z", "X", "C", "V", "B", "N", "M", ",", "."]]
 
     finalText = ""
     backspaceClicked = False  # Flag to track if Backspace button was clicked
@@ -127,20 +127,21 @@ def button2_click():
 
                     if button.text == "<":
                         l, _, _ = detector.findDistance(8, 12, img, draw=False)
-                        if l < 30 and backspaceClicked==False:
-                            cv2.rectangle(img, button.pos, (x + w, y + h), (0, 255, 0), cv2.FILLED)
-                            cv2.putText(img, button.text, (x + 20, y + 65), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 4)
-                            finalText = finalText[:-1]  # Remove the last character
-                            backspaceClicked = False # Set the Backspace flag
-                            time.sleep(0.15)
+                        if l >= 30 and backspaceClicked:
+                            continue
+                        cv2.rectangle(img, button.pos, (x + w, y + h), (0, 255, 0), cv2.FILLED)
+                        cv2.putText(img, button.text, (x + 20, y + 65), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 4)
+                        finalText = finalText[:-1]  # Remove the last character
+                        backspaceClicked = False  # Set the Backspace flag
+                        time.sleep(0.1555555)
                     else:
                         l, _, _ = detector.findDistance(8, 12, img, draw=False)
                         if l < 30:
                             cv2.rectangle(img, button.pos, (x + w, y + h), (0, 255, 0), cv2.FILLED)
                             cv2.putText(img, button.text, (x + 20, y + 65), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 4)
                             finalText += button.text
-                              # Reset the Backspace flag
-                            time.sleep(0.15)
+                            backspaceClicked = False  # Reset the Backspace flag
+                            time.sleep(0.1555555)
 
         cv2.rectangle(img, (50, 350), (700, 450), (175, 0, 175), cv2.FILLED)
         cv2.putText(img, finalText, (60, 430), cv2.FONT_HERSHEY_PLAIN, 5, (255, 255, 255), 5)
@@ -150,6 +151,7 @@ def button2_click():
 
         cv2.imshow("Image", img)
         cv2.waitKey(1)
+    
 
         
 
