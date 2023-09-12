@@ -50,7 +50,7 @@ def button1_click():
             if fingers[1] == 1 and fingers[2] == 1:     # If fore finger & middle finger both are up
                 length, img, lineInfo = detector.findDistance(8, 12, img)
 
-                if length < 40:     # If both fingers are really close to each other
+                if length < 60:     # If both fingers are really close to each other
                     cv2.circle(img, (lineInfo[4], lineInfo[5]), 15, (0, 255, 0), cv2.FILLED)
                     autopy.mouse.click()    # Perform Click
 
@@ -142,14 +142,14 @@ def button2_click():
 
         cv2.rectangle(img, (50,350), (700,450), (175,0,175), cv2.FILLED)
         cv2.putText(img, finalText , (60,430), cv2.FONT_HERSHEY_PLAIN, 5, (255,255,255), 5)
-        if cv2.waitKey(1) == ord("  q"):  # Press 'e' key to exit the loop
+        
+        if cv2.waitKey(1) == ord("e"):  # Press 'e' key to exit the loop
             break
 
         cv2.imshow("Image",img)
         cv2.waitKey(1)
-    cap.release()
-    cv2.destroyAllWindows()
-
+   
+        
 
 
 # volume control to be executed when Button 3 is clicked
