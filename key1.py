@@ -57,11 +57,11 @@ while True:
 
                 if button.text == "<":
                     l, _, _ = detector.findDistance(8, 12, img, draw=False)
-                    if l < 30 and backspaceClicked==False:
+                    if l < 30 and not backspaceClicked:
                         cv2.rectangle(img, button.pos, (x + w, y + h), (0, 255, 0), cv2.FILLED)
                         cv2.putText(img, button.text, (x + 20, y + 65), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 4)
                         finalText = finalText[:-1]  # Remove the last character
-                        backspaceClicked = False # Set the Backspace flag
+                        backspaceClicked = True  # Set the Backspace flag
                         time.sleep(0.15)
                 else:
                     l, _, _ = detector.findDistance(8, 12, img, draw=False)
