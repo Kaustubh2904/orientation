@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import *
 
 # Function to be executed when Button 1 is clicked
 def button1_click():
@@ -59,7 +60,7 @@ def button1_click():
         cv2.putText(img, str(int(fps)), (20, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
         cv2.imshow("Image", img)
         key = cv2.waitKey(1)
-        if key == ord('r'):
+        if key == ord('q'):
             break
 
     cap.release()
@@ -161,7 +162,7 @@ def button3_click():
 # Create the main window
 root = tk.Tk()
 root.title("Virtual Computer System")
-root.geometry("640x480")  # Set window dimensions
+root.geometry("640x550")  # Set window dimensions
 
 # Customize the main window background color
 root.configure(bg="cyan")
@@ -169,17 +170,22 @@ root.configure(bg="cyan")
 # Create a custom font
 custom_font = ("comic_sans", 16, "italic")
 
-# Create Button 1 with a custom style
-button1_style = tk.Button(root, text="Virtual mouse ", command=button1_click, font=custom_font, bg="blue", fg="white")
-button1_style.pack(pady=20)  # Add some padding
 
-# Create Button 2 with different colors and font
-button2_style = tk.Button(root, text="volume control", command=button3_click, font=custom_font, bg="red", fg="white")
+image = tk.PhotoImage(file="megalogowithstroke.png")
+image_label = tk.Label(root, image=image, bg="cyan")
+image_label.pack()
+
+button1_style = tk.Button(root, text="Virtual mouse ", command=button1_click, font=custom_font, bg="blue", fg="white")
+button1_style.pack(pady=20)  # Add vertical padding to center the button
+
+# Create Button 2 with different colors and font and center it
+button2_style = tk.Button(root, text="Virtual Keyboard", command=button2_click, font=custom_font, bg="blue", fg="white")
 button2_style.pack(pady=20)
 
-# Create Button 3 with another set of colors and font
-button3_style = tk.Button(root, text="volume control", command=button3_click, font=custom_font, bg="red", fg="white")
+# Create Button 3 with another set of colors and font and center it
+button3_style = tk.Button(root, text="Virtual volume control", command=button3_click, font=custom_font, bg="blue", fg="white")
 button3_style.pack(pady=20)
+
 
 # Start the GUI main loop
 root.mainloop()
