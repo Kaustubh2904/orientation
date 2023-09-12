@@ -139,7 +139,7 @@ def button2_click():
                             cv2.rectangle(img, button.pos, (x + w, y + h), (0, 255, 0), cv2.FILLED)
                             cv2.putText(img, button.text, (x + 20, y + 65), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 4)
                             finalText += button.text
-                            backspaceClicked = False  # Reset the Backspace flag
+                              # Reset the Backspace flag
                             time.sleep(0.15)
 
         cv2.rectangle(img, (50, 350), (700, 450), (175, 0, 175), cv2.FILLED)
@@ -244,28 +244,30 @@ def button3_click():
 # Create the main window
 root = tk.Tk()
 root.title("Virtual Computer System")
-root.geometry("640x550")  # Set window dimensions
+root.geometry("1920x1080")  # Set window dimensions
+
+
 
 # Customize the main window background color
-root.configure(bg="cyan")
+root.configure(bg="#23272f")
 
 # Create a custom font
-custom_font = ("comic_sans", 16, "italic")
+custom_font = ("cambria", 16, "bold")
 
 
 image = tk.PhotoImage(file="megalogowithstroke.png")
-image_label = tk.Label(root, image=image, bg="cyan")
+image_label = tk.Label(root, image=image, bg="#23272f")
 image_label.pack()
 
-button1_style = tk.Button(root, text="Virtual mouse ", command=button1_click, font=custom_font, bg="blue", fg="white")
+button1_style = tk.Button(root, text="Virtual mouse ", command=button1_click, relief="flat", font=custom_font, bg="#087ea4", fg="white")
 button1_style.pack(pady=20)  # Add vertical padding to center the button
 
 # Create Button 2 with different colors and font and center it
-button2_style = tk.Button(root, text="Virtual Keyboard", command=button2_click, font=custom_font, bg="blue", fg="white")
+button2_style = tk.Button(root, text="Virtual Keyboard", command=button2_click, relief="flat", font=custom_font, bg="#087ea4", fg="white")
 button2_style.pack(pady=20)
 
 # Create Button 3 with another set of colors and font and center it
-button3_style = tk.Button(root, text="Virtual volume control", command=button3_click, font=custom_font, bg="blue", fg="white")
+button3_style = tk.Button(root, text="Virtual volume control", command=button3_click, relief="flat", font=custom_font, bg="#087ea4", fg="white")
 button3_style.pack(pady=20)
 
 
