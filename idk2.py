@@ -164,21 +164,21 @@ root.title("Virtual Computer System")
 root.geometry("640x480")  # Set window dimensions
 
 # Customize the main window background color
-root.configure(bg="lightgray")
+root.configure(bg="cyan")
 
 # Create a custom font
-custom_font = ("comic_sans", 12, "bold")
+custom_font = ("comic_sans", 16, "italic")
 
 # Create Button 1 with a custom style
 button1_style = tk.Button(root, text="Virtual mouse ", command=button1_click, font=custom_font, bg="blue", fg="white")
 button1_style.pack(pady=20)  # Add some padding
 
 # Create Button 2 with different colors and font
-button2_style = tk.Button(root, text="Virtual Keyboard", command=button2_click, font=("Verdana", 10), bg="orange", fg="black")
+button2_style = tk.Button(root, text="volume control", command=button3_click, font=custom_font, bg="red", fg="white")
 button2_style.pack(pady=20)
 
 # Create Button 3 with another set of colors and font
-button3_style = tk.Button(root, text="volume control", command=button3_click, font=("Helvetica", 14), bg="red", fg="white")
+button3_style = tk.Button(root, text="volume control", command=button3_click, font=custom_font, bg="red", fg="white")
 button3_style.pack(pady=20)
 
 # Start the GUI main loop
