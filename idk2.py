@@ -202,7 +202,7 @@ def button3_click():
 
             cv2.circle(img, (x1, y1), 15, (255, 0, 0), cv2.FILLED)
             cv2.circle(img, (x2, y2), 15, (255, 0, 0), cv2.FILLED)
-            cv2.line(img, (x1, y1), (x2, y2), (0, 255, 255), 3)
+            cv2.line(img, (x1, y1), (x2, y2), (144,298,144), 3) #line color
             cv2.circle(img, (cx, cy), 15, (0, 0, 255), cv2.FILLED)
 
             length = math.hypot(x2 - x1, y2 - y1)
